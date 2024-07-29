@@ -15,7 +15,7 @@ test.describe('signup form tests', () => {
     // Arrange
     const newUser = generateUserData()
     // Act
-    await signupPage.signupNewUser(newUser)
+    await signupPage.signupUser(newUser)
     // Assert
     await expect(signupPage.subHeading).toContainText(newUser.firstName)
   })
@@ -24,7 +24,7 @@ test.describe('signup form tests', () => {
     // Arrange
     const existingUser: User = existingUsers[0]
     // Act
-    await signupPage.signupExistingUser(existingUser)
+    await signupPage.signupUser(existingUser)
     // Assert
     await expect(signupPage.userExistsMessage).toBeVisible()
   })

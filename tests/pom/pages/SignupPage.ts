@@ -68,23 +68,6 @@ export class SignupPage extends BasePage {
   }
 
   /**
-   * Signs up a new user.
-   * @param newUser - The user object containing the details of the new user.
-   */
-  async signupNewUser(newUser: User): Promise<void> {
-    await this.signupUser(newUser)
-  }
-
-  /**
-   * Signs up an existing user.
-   *
-   * @param existingUser - The existing user to sign up.
-   */
-  async signupExistingUser(existingUser: User): Promise<void> {
-    await this.signupUser(existingUser)
-  }
-
-  /**
    * Signs up a user with the provided user information.
    * @param user - The user object containing the user information.
    */
