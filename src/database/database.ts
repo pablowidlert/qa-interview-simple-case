@@ -2,16 +2,18 @@ import { User } from '../App'
 
 export const key = 'users'
 
-export const createUser = async (user: User): Promise<User> => {
+export const createUser = async (user: User): Promise<User | null> => {
   const data = readDatabase()
 
-  if (data.users.find((existingUser) => existingUser.email === user.email))
-    console.log('User already exists')
+  // Improvement: Check if the user already exists
+  if (data.users.find((existingUser) => existingUser.email === user.email)) {
+    return null
+  } else {
+    data.users.push(user)
+    localStorage.setItem(key, JSON.stringify(data))
 
-  data.users.push(user)
-  localStorage.setItem(key, JSON.stringify(data))
-
-  return user
+    return user
+  }
 }
 
 export const loginUser = async (
@@ -24,8 +26,7 @@ export const loginUser = async (
     (user) => user.email === email && user.password === password,
   )
   if (user) return user
-
-  return null
+  else return null
 }
 
 const readDatabase = (): { users: User[] } => {

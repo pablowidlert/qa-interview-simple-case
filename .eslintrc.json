@@ -4,9 +4,12 @@
     "jsx": true,
     "useJSXTextNode": true
   },
-  "extends": [
-    "plugin:@typescript-eslint/recommended",
-    "prettier"
+  "extends": ["plugin:@typescript-eslint/recommended", "prettier"],
+  "overrides": [
+    {
+      "files": "tests/**",
+      "extends": "plugin:playwright/recommended"
+    }
   ],
   "plugins": ["react-hooks"],
   "rules": {
