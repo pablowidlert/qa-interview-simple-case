@@ -5,43 +5,69 @@ import {
   Input,
   InputAdornment,
   IconButton,
+  FormHelperText,
 } from '@mui/material'
 import React, { useState } from 'react'
 
 interface PasswordFieldProps {
   id: string
-  fullWidth: boolean
-  required: boolean
-  variant: 'filled'
   password: string | undefined
   setPassword: React.Dispatch<React.SetStateAction<string>>
   label: string
+  error: boolean
+  helperText: string | null
+  onChange: (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+  ) => void
+  onKeyDown?: (e: React.KeyboardEvent<HTMLInputElement>) => void
+  fullWidth: boolean
+  required: boolean
+  variant: 'filled'
 }
 
 export const PasswordField: React.FC<PasswordFieldProps> = ({
   id,
-  fullWidth,
-  required,
-  variant,
   password,
   setPassword,
   label,
+  error,
+  helperText,
+  onChange,
+  onKeyDown,
+  fullWidth,
+  required,
+  variant,
 }) => {
   const [showPassword, setShowPassword] = useState(false)
 
+  const handleClickShowPassword = () => {
+    setShowPassword(!showPassword)
+  }
+
   return (
-    <FormControl variant={variant}>
-      <InputLabel htmlFor="password">{label}</InputLabel>
+    <FormControl
+      fullWidth={fullWidth}
+      required={required}
+      variant={variant}
+      error={error}
+    >
+      <InputLabel htmlFor={id}>{label}</InputLabel>
       <Input
+        inputProps={{ 'data-testid': 'passwordInput' }}
         id={id}
         type={showPassword ? 'text' : 'password'}
         value={password}
-        onChange={(e) => setPassword(e.target.value)}
+        onChange={(e) => {
+          setPassword(e.target.value.replace(/\s/g, ''))
+          onChange(e)
+        }}
+        onKeyDown={onKeyDown}
         endAdornment={
           <InputAdornment position="end">
             <IconButton
+              data-testid="togglePasswordVisibility"
               aria-label="toggle password visibility"
-              onClick={() => setShowPassword(!showPassword)}
+              onClick={handleClickShowPassword}
               onMouseDown={(e) => e.preventDefault()}
               edge="end"
             >
@@ -49,9 +75,12 @@ export const PasswordField: React.FC<PasswordFieldProps> = ({
             </IconButton>
           </InputAdornment>
         }
-        fullWidth={fullWidth}
-        required={required}
       />
+      {error && (
+        <FormHelperText data-testid="passwordInputError">
+          {helperText}
+        </FormHelperText>
+      )}
     </FormControl>
   )
 }

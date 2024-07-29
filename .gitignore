@@ -5,4 +5,5 @@ dist
 dist-ssr
 *.local
 playwright/
+playwright-report/
 *.idea

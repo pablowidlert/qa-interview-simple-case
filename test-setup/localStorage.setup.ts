@@ -1,27 +1,7 @@
 import { test as setup } from '@playwright/test'
 import { promises as fs } from 'fs'
 import { setupDir, setupFile } from '../playwright.config'
-
-export const existingUsers = [
-  {
-    email: 'test1@mail.com',
-    password: 'testPassword!',
-    firstName: 'Test1',
-    lastName: 'Testsson1',
-  },
-  {
-    email: 'test2@mail.com',
-    password: 'testPassword!',
-    firstName: 'Test2',
-    lastName: 'Testsson2',
-  },
-  {
-    email: 'test3@mail.com',
-    password: 'testPassword!',
-    firstName: 'Test3',
-    lastName: 'Testsson3',
-  },
-] as const
+import existingUsers from '../test-data/existing.users.json'
 
 setup('localStorage', async () => {
   const storageState = {
